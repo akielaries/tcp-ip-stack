@@ -17,6 +17,12 @@
  * In this particular setting, we will start from layer 2 and up as our
  * physical layer is previously established.
  *
+ *
+ * Some notable sources:
+ *      https://www.rfc-editor.org/rfc/rfc7414
+ *      https://www.rfc-editor.org/rfc/rfc826
+ *
+ *
  */
 #include <stdlib.h>
 #include <string.h>
