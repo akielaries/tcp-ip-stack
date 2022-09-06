@@ -18,6 +18,10 @@
  * physical layer is previously established.
  *
  */
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+
 
 
 // instantiate TAP device
@@ -26,7 +30,32 @@ static int tun_alloc(char *dev) {
     struct ifreq ifr;
     int fd, err;
 
-    if ((fd = open("dev/net/tap")))
+    if ((fd = open("dev/net/tap", O_RDWR)) < 0) {
+        print_error("DBG STMT ERR: UNABLE TO OPEN TUN/TAP dev");
+        // exit the program
+        exit(1);
+    }
+
+    CLEAN(ifr);
+    
+    /* Flags: IFF_TUN   - TUN device (no Ethernet headers)
+     *        IFF_TAP   - TAP device
+     *
+     *        IFF_NO_PI - Do not provide packet information
+     */
+    
+    ifr.ifr_flags = IFF_TAP | IFF_NO_PI;
+    if(*dev) {
+        strncpy(ifr.ifr_name, dev, IFNAMSIZ);
+    }
+
+    if ((err = ioctl(fd, TUNSETIFF, (void *) &ifr)) < 0) {
+        print_error("DBG STMT ERR: UNABLE TO ioctl TUN: %s\n", strerror(errno));
+        close(fd);
+        return err;
+    }
+    strcpy(dev, ifr.ifr_name);
+    return fd;
 
 }
 
