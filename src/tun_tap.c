@@ -30,9 +30,12 @@
 #include <errno.h>
 
 
-
-// instantiate TAP device
-static int tun_alloc(char *dev) {
+/*
+ *
+ * instantiate TAP device
+ * dev refers to our device name
+ */
+ static int tun_alloc(char *dev) {
     // document this in next pushes for better understanding
     struct ifreq ifr;
     int fd, err;
