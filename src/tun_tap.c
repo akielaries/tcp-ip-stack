@@ -19,11 +19,12 @@
  *
  *
  * Some notable sources:
- *      https://www.rfc-editor.org/rfc/rfc7414
- *      https://www.rfc-editor.org/rfc/rfc826
- *
+ *      - https://www.rfc-editor.org/rfc/rfc7414
+ *      - https://www.rfc-editor.org/rfc/rfc826
+ *      - https://www.kernel.org/doc/Documentation/networking/tuntap.txt
  *
  */
+
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
@@ -37,7 +38,7 @@ static int tun_alloc(char *dev) {
     int fd, err;
 
     if ((fd = open("dev/net/tap", O_RDWR)) < 0) {
-        print_error("DBG STMT ERR: UNABLE TO OPEN TUN/TAP dev");
+        print_error("DBG STMT   ERR: UNABLE TO OPEN TUN/TAP dev");
         // exit the program
         exit(1);
     }
